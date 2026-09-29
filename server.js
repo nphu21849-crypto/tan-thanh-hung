@@ -156,8 +156,9 @@ http.createServer(async (req, res) => {
   }
   if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405, { Allow: 'GET, HEAD' }).end('Method not allowed'); return; }
   serveFile(req, res, pathname);
-}).listen(port, process.env.HOST || '127.0.0.1', () => {
+}).listen(port, process.env.HOST || '0.0.0.0', () => {
   const missing = [...allowlist].filter(([email]) => !passwordRecords.has(email)).map(([email]) => email);
   console.log(`Tân Thành Hưng website: http://localhost:${port}`);
   if (missing.length) console.warn(`Admin login disabled until .env passwords (at least 16 characters) are set for: ${missing.join(', ')}`);
 });
+
