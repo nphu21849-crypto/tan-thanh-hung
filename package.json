@@ -1,0 +1,9 @@
+{
+  "name": "tan-thanh-hung-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website Tân Thành Hưng với backend Node.js và đăng nhập quản trị được xác minh phía máy chủ",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
