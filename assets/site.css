@@ -715,11 +715,32 @@ body[data-page=legal] .page-hero:after{background-image:url('https://www.klimabe
   .support-launch{height:43px;padding:0 11px;gap:7px;font-size:10px}
   .support-launch-icon{width:23px;height:23px;font-size:13px}
 }
+@media(max-width:640px){
+  .category-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+  .category-grid .category-card{display:grid;grid-template-columns:minmax(112px,38%) minmax(0,1fr);align-items:stretch;min-height:170px}
+  .category-grid .category-image{height:auto;min-height:170px}
+  .category-grid .category-image:before{display:none}
+  .category-grid .category-content{height:auto;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:14px 13px}
+  .category-grid .category-content h3{margin-bottom:7px;font-size:14px;line-height:1.36;overflow-wrap:anywhere}
+  .category-grid .category-content p{display:-webkit-box;min-height:0;margin-bottom:7px;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:3;font-size:10px;line-height:1.55}
+  .category-grid .catalog-product-meta{gap:7px;margin:5px 0 8px;padding:7px 0}
+  .category-grid .catalog-product-meta>span{min-width:0;flex:1;gap:2px}
+  .category-grid .catalog-product-meta small{font-size:6px}
+  .category-grid .catalog-product-meta b{font-size:9px;line-height:1.35}
+  .category-grid .category-content .text-link{font-size:9px}
+  .category-grid .sample-badge{display:none}
+  .category-grid .category-number{top:8px;left:9px;font-size:8px}
+}
 @media(max-width:380px){
   .container{width:calc(100% - 26px)}
   .catalog-grid .category-card{grid-template-columns:112px minmax(0,1fr);min-height:160px}
   .catalog-grid .category-image{min-height:160px}
   .catalog-grid .category-content{padding:11px 10px}
+  .category-grid .category-card{grid-template-columns:112px minmax(0,1fr);min-height:160px}
+  .category-grid .category-image{min-height:160px}
+  .category-grid .category-content{padding:11px 10px}
+  .category-grid .category-content h3{font-size:13px}
+  .category-grid .category-content p{font-size:9px;-webkit-line-clamp:2}
   .catalog-grid .category-content h3{font-size:13px}
   .catalog-grid .category-content p{font-size:9px;-webkit-line-clamp:2}
   .catalog-grid .catalog-product-meta{gap:5px}
