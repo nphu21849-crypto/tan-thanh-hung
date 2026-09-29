@@ -36,7 +36,29 @@
   function chatReply(question){const answer=getChatAnswer(question),normalized=normalizeChat(question);addChat(answer,'bot');const actions=document.createElement('div');actions.className='support-choices support-after';actions.innerHTML=`${/(vrv|vrf|daikin)/.test(normalized)?'<a href="https://www.daikin.com.vn/san-pham/vrv-series" target="_blank" rel="noopener">Thông tin VRV Daikin ↗</a>':''}<a href="https://zalo.me/${d.company.zalo}" target="_blank" rel="noopener">Nhắn Zalo với tư vấn viên ↗</a><a href="tel:+84974355191">Gọi ${d.company.phone}</a>`;chatMessages.append(actions);chatMessages.scrollTop=chatMessages.scrollHeight}
   chatMessages.addEventListener('click',event=>{const button=event.target.closest('[data-chat-choice]');if(!button)return;addChat(button.textContent);chatReply(button.dataset.chatChoice)});
   $('.support-compose',chat).addEventListener('submit',e=>{e.preventDefault();const input=$('.support-compose input',chat),message=input.value.trim();if(!message)return;addChat(message);input.value='';chatReply(message)});  const cartRoot=$('[data-cart-root]'); if(cartRoot) cartRoot.innerHTML=`<div class="cart-overlay" data-cart-overlay></div><aside class="cart-drawer" aria-label="Danh sách yêu cầu" aria-hidden="true"><div class="cart-head"><div><div class="eyebrow">TRAO ĐỔI NHU CẦU</div><h2>Danh sách yêu cầu</h2></div><button class="cart-close" data-cart-close aria-label="Đóng">×</button></div><div class="cart-items" data-cart-items></div><div class="cart-bottom"><p>Danh sách này chỉ giúp ghi nhớ nhóm sản phẩm bạn muốn hỏi. Chưa có giá hoặc thanh toán trực tuyến.</p><a class="button button-primary" data-cart-contact href="contact.html">Tiếp tục liên hệ <span>↗</span></a></div></aside>`;
-  const menuBtn=$('.menu-toggle'),nav=$('.main-nav'); if(menuBtn) menuBtn.addEventListener('click',()=>{let o=menuBtn.getAttribute('aria-expanded')==='true';menuBtn.setAttribute('aria-expanded',String(!o));nav.classList.toggle('nav-open',!o);document.body.classList.toggle('menu-open',!o)});
+  const menuBtn=$('.menu-toggle'),nav=$('.main-nav');
+  if(menuBtn && nav) {
+    const syncNavTop = () => {
+      const header = menuBtn.closest('.site-header');
+      if (header) {
+        const bottom = Math.round(header.getBoundingClientRect().bottom);
+        nav.style.setProperty('--nav-top', `${Math.max(0, bottom)}px`);
+      }
+    };
+    menuBtn.addEventListener('click',()=>{
+      let o=menuBtn.getAttribute('aria-expanded')==='true';
+      if (!o) syncNavTop();
+      menuBtn.setAttribute('aria-expanded',String(!o));
+      nav.classList.toggle('nav-open',!o);
+      document.body.classList.toggle('menu-open',!o);
+    });
+    window.addEventListener('resize', () => {
+      if (nav.classList.contains('nav-open')) syncNavTop();
+    }, { passive: true });
+    window.addEventListener('scroll', () => {
+      if (nav.classList.contains('nav-open')) syncNavTop();
+    }, { passive: true });
+  }
   $$('.main-nav a').forEach(a=>a.addEventListener('click',()=>{nav?.classList.remove('nav-open');menuBtn?.setAttribute('aria-expanded','false');document.body.classList.remove('menu-open')}));
   document.addEventListener('click',event=>{const link=event.target.closest('a[href]');if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||link.target==='_blank'||link.hasAttribute('download')||reducePrefersMotion())return;const destination=new URL(link.href,location.href);if(destination.origin!==location.origin||!destination.pathname.endsWith('.html')||destination.href===location.href||(destination.pathname===location.pathname&&destination.search===location.search))return;event.preventDefault();document.body.classList.add('page-leaving');window.setTimeout(()=>location.assign(destination.href),440)});
   function reducePrefersMotion(){return window.matchMedia('(prefers-reduced-motion: reduce)').matches}
